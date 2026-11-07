@@ -1,0 +1,93 @@
+/* Reconnect Banner Styling */
+
+.reconnect-banner {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.1);
+  animation: slide-down 0.3s ease;
+}
+
+.reconnect-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.reconnect-banner-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-vault-amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reconnect-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.reconnect-banner-text strong {
+  font-size: 0.88rem;
+  color: var(--color-vault-amber);
+}
+
+.reconnect-banner-text span {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.btn-reconnect-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--color-vault-amber);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reconnect-action:hover {
+  background: #fbbf24;
+  transform: translateY(-1px);
+}
+
+.btn-reconnect-action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

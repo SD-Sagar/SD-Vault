@@ -1,0 +1,218 @@
+/* Media Viewer Modal Styles */
+
+.media-viewer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: viewer-fade 0.2s ease;
+}
+
+.media-viewer-container {
+  width: 100%;
+  max-width: 1200px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: #0b0f17;
+  border: 1px solid var(--border-medium);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+}
+
+.media-viewer-header {
+  height: 56px;
+  background: #111622;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  flex-shrink: 0;
+}
+
+.media-viewer-title-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  max-width: 60%;
+}
+
+.media-title {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.media-badge {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  background: rgba(229, 169, 60, 0.15);
+  color: var(--color-vault-gold);
+  padding: 2px 8px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.media-viewer-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.viewer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #1a2232;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.viewer-btn:hover {
+  background: #243046;
+  color: #fff;
+  border-color: var(--border-medium);
+}
+
+.viewer-btn.primary {
+  background: var(--color-vault-gold);
+  color: #000;
+  font-weight: 700;
+  border: none;
+}
+
+.viewer-btn.primary:hover {
+  background: var(--color-vault-gold-hover);
+}
+
+.viewer-btn.close {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-vault-ruby);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.viewer-btn.close:hover {
+  background: var(--color-vault-ruby);
+  color: #fff;
+}
+
+.media-viewer-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle at center, #131a26 0%, #070a0f 100%);
+  padding: 1.5rem;
+}
+
+.image-viewport {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.viewer-image {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.video-viewport {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer-video {
+  max-width: 95%;
+  max-height: 95%;
+  border-radius: 8px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+  outline: none;
+}
+
+.audio-viewport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.audio-card {
+  background: #111622;
+  border: 1px solid var(--border-medium);
+  border-radius: 16px;
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.viewer-audio {
+  width: 320px;
+}
+
+.media-viewer-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-family: var(--font-mono);
+}
+
+.viewer-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(229, 169, 60, 0.2);
+  border-top-color: var(--color-vault-gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.media-viewer-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+@keyframes viewer-fade {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+

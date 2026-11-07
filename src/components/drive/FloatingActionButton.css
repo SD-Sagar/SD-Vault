@@ -1,0 +1,91 @@
+/* Floating Action Button (FAB) Styling */
+
+.vault-fab-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.fab-main-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--bg-metallic);
+  border: 2px solid var(--color-vault-gold);
+  color: var(--color-vault-gold);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(229, 169, 60, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fab-main-btn:hover {
+  transform: scale(1.08) rotate(90deg);
+  background: var(--color-vault-gold);
+  color: #000;
+  box-shadow: 0 8px 25px rgba(229, 169, 60, 0.4);
+}
+
+.fab-main-btn.open {
+  transform: rotate(45deg);
+  background: var(--color-vault-gold);
+  color: #000;
+}
+
+.fab-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fab-slide 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fab-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.fab-menu-item:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-glow);
+  transform: translateX(-4px);
+}
+
+.fab-menu-item svg {
+  color: var(--color-vault-gold);
+}
+
+@keyframes fab-slide {
+  from { opacity: 0; transform: translateY(12px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .vault-fab-container {
+    bottom: 4.5rem;
+    right: 1.25rem;
+  }
+  .fab-main-btn {
+    width: 50px;
+    height: 50px;
+  }
+}
+

@@ -1,0 +1,109 @@
+/* Selection Action Bar Styling */
+
+.selection-action-bar {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 55;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-glow);
+  border-radius: 30px;
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(229, 169, 60, 0.2);
+  backdrop-filter: blur(12px);
+  animation: bar-pop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.selection-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-vault-gold);
+  white-space: nowrap;
+  border-right: 1px solid var(--border-subtle);
+  padding-right: 12px;
+}
+
+.selection-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.action-pill-btn:hover {
+  background: var(--border-glow);
+  color: #fff;
+  border-color: var(--color-vault-gold);
+}
+
+.action-pill-btn.active-paste {
+  background: var(--color-vault-gold);
+  color: #000;
+  border-color: var(--color-vault-gold);
+}
+
+.action-pill-btn.active-paste:hover {
+  background: var(--color-vault-gold-hover);
+}
+
+.action-pill-btn.danger {
+  color: var(--color-vault-ruby);
+}
+
+.action-pill-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--color-vault-ruby);
+  color: #fff;
+}
+
+@keyframes bar-pop {
+  from { opacity: 0; transform: translate(-50%, 15px) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .selection-action-bar {
+    bottom: 4.5rem;
+    padding: 6px 12px;
+    gap: 0.75rem;
+    border-radius: 18px;
+  }
+  .action-pill-btn span {
+    display: none;
+  }
+  .action-pill-btn {
+    padding: 7px;
+    border-radius: 50%;
+    min-width: 32px;
+    justify-content: center;
+  }
+  .selection-info {
+    font-size: 0.75rem;
+    padding-right: 8px;
+  }
+}
+

@@ -1,0 +1,425 @@
+/* Fallout-Inspired Heavy Industrial Vault Door Styling */
+
+.vault-stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #111827 0%, #080b10 65%, #020406 100%);
+  perspective: 1600px;
+  padding: 1.5rem;
+  transition: background 0.3s ease;
+}
+
+.vault-backdrop-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(245, 185, 76, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 185, 76, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Industrial Wall Bulkhead Frame */
+.vault-bulkhead-frame {
+  position: relative;
+  width: min(580px, 92vw);
+  height: min(580px, 92vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2a3447, #131a26 70%, #070a0f);
+  box-shadow: 
+    0 0 0 16px #0b0f17,
+    0 0 0 20px #1e293b,
+    0 0 0 24px #070a0f,
+    0 30px 80px rgba(0, 0, 0, 0.9),
+    inset 0 0 50px rgba(0, 0, 0, 0.95);
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+
+/* Industrial Overhead Monorail Track (Door slides along this track) */
+.vault-monorail-track {
+  position: absolute;
+  top: 4%;
+  left: 5%;
+  right: -55%;
+  height: 22px;
+  background: linear-gradient(180deg, #334155, #0f172a 70%, #475569);
+  border-radius: 6px;
+  border: 2px solid #0b0f17;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  z-index: 35;
+  pointer-events: none;
+}
+
+.track-teeth {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, #1e293b 0px, #1e293b 8px, #475569 8px, #475569 16px);
+  opacity: 0.8;
+}
+
+/* Interior Illuminated Vault Tunnel (revealed when door rolls away) */
+.vault-interior-tunnel {
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(245, 185, 76, 0.35) 0%, rgba(6, 182, 212, 0.15) 45%, #05070b 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.95);
+  z-index: 5;
+}
+
+.tunnel-light-bloom {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(245, 185, 76, 0.5) 0%, rgba(229, 169, 60, 0.2) 30%, transparent 70%);
+  filter: blur(35px);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+
+.tunnel-light-bloom.active {
+  opacity: 1;
+}
+
+/* The Heavy Cog Gear Door Assembly (Always in front of bulkhead) */
+.vault-cog-door {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.25, 1), filter 0.8s ease;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
+}
+
+.vault-cog-door.door-interactive {
+  cursor: pointer;
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.25, 1), filter 0.4s ease;
+}
+
+.vault-cog-door.door-interactive:hover {
+  filter: drop-shadow(0 0 35px rgba(245, 185, 76, 0.45)) drop-shadow(0 20px 40px rgba(0,0,0,0.9)) brightness(1.08);
+}
+
+.vault-door-svg {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Vault States: Gear door stays firmly in front on positive Z-plane */
+/* State 1: LOCKED (flush with bulkhead wall) */
+.vault-cog-door.state-locked {
+  transform: translate3d(0, 0, 15px) scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+/* State 2: UNLOCKING (hydraulic clamp disengages and shifts forward) */
+.vault-cog-door.state-unlocking {
+  animation: vaultDoorUnclampForward 1.15s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+}
+
+/* State 3: OPENING (door rolls sideways along the track to the right, fully in front) */
+.vault-cog-door.state-opening {
+  animation: vaultDoorRollOutForward 1.75s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+}
+
+/* State 4: OPEN (fully rolled out of way) */
+.vault-cog-door.state-open {
+  transform: translate3d(140%, 0, 45px) scale(0.98) rotate(180deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* State 5: CLOSING (door rolls back over doorway from the right) */
+.vault-cog-door.state-closing {
+  animation: vaultDoorRollInReverse 1.55s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+}
+
+/* State 6: LOCKING (door rams forward into the frame flush with the wall) */
+.vault-cog-door.state-locking {
+  animation: vaultDoorSlamLock 0.95s cubic-bezier(0.2, 0.85, 0.3, 1) forwards;
+}
+
+@keyframes vaultDoorUnclampForward {
+  0% {
+    transform: translate3d(0, 0, 15px) scale(1) rotate(0deg);
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
+  }
+  100% {
+    transform: translate3d(0, 0, 45px) scale(0.98) rotate(-6deg);
+    filter: drop-shadow(0 20px 45px rgba(245, 158, 11, 0.35)) brightness(1.05);
+  }
+}
+
+@keyframes vaultDoorRollOutForward {
+  0% {
+    transform: translate3d(0, 0, 45px) scale(0.98) rotate(-6deg);
+    opacity: 1;
+    filter: drop-shadow(0 20px 45px rgba(245, 158, 11, 0.35));
+  }
+  100% {
+    transform: translate3d(140%, 0, 45px) scale(0.98) rotate(180deg);
+    opacity: 0;
+    filter: drop-shadow(-15px 15px 40px rgba(0, 0, 0, 0.9));
+  }
+}
+
+@keyframes vaultDoorRollInReverse {
+  0% {
+    transform: translate3d(140%, 0, 45px) scale(0.98) rotate(180deg);
+    opacity: 0.95;
+    filter: drop-shadow(-15px 15px 40px rgba(0, 0, 0, 0.9));
+  }
+  100% {
+    transform: translate3d(0, 0, 45px) scale(0.98) rotate(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9));
+  }
+}
+
+@keyframes vaultDoorSlamLock {
+  0% {
+    transform: translate3d(0, 0, 45px) scale(0.98) rotate(0deg);
+    filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9));
+  }
+  100% {
+    transform: translate3d(0, 0, 15px) scale(1) rotate(0deg);
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
+  }
+}
+
+/* Outer Gear Cog Teeth (Fallout-style perimeter teeth) */
+.vault-cog-teeth {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.cog-tooth {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 48px;
+  margin-left: -16px;
+  margin-top: -24px;
+  background: linear-gradient(180deg, #64748b, #334155 70%, #1e293b);
+  border: 2px solid #0f172a;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  transform-origin: center center;
+}
+
+/* Door Face Core Plate */
+.vault-door-plate {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #38455a, #1a2230 65%, #0d121c);
+  border: 6px solid #475569;
+  box-shadow: 
+    inset 0 4px 12px rgba(255, 255, 255, 0.25),
+    inset 0 -10px 24px rgba(0, 0, 0, 0.9),
+    0 15px 40px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Hazard Yellow/Black Perimeter Stripes */
+.vault-hazard-ring {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 14px solid transparent;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #eab308,
+    #eab308 14px,
+    #0f172a 14px,
+    #0f172a 28px
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 14px), #fff calc(100% - 14px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 14px), #fff calc(100% - 14px));
+  opacity: 0.85;
+}
+
+/* Heavy Steel Cross Bracing */
+.vault-cross-brace-h {
+  position: absolute;
+  width: 90%;
+  height: 28px;
+  background: linear-gradient(180deg, #475569, #1e293b, #0f172a);
+  border: 2px solid #090d14;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.vault-cross-brace-v {
+  position: absolute;
+  width: 28px;
+  height: 90%;
+  background: linear-gradient(90deg, #475569, #1e293b, #0f172a);
+  border: 2px solid #090d14;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+/* Center Mechanical Hub with Stenciled Number */
+.vault-center-hub {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #475569, #1e293b 80%, #090d14);
+  border: 5px solid #64748b;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9), inset 0 2px 6px rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.vault-stenciled-number {
+  font-family: var(--font-mono);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: #f59e0b;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(245, 158, 11, 0.4);
+  line-height: 1;
+}
+
+.vault-stenciled-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* Hydraulic Piston Arm (Connects center hub to outer frame) */
+.hydraulic-piston {
+  position: absolute;
+  width: 16px;
+  height: 48%;
+  background: linear-gradient(90deg, #94a3b8, #cbd5e1 40%, #64748b);
+  border: 1px solid #1e293b;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  transform-origin: top center;
+}
+
+/* Steam particle puffs on unlocking */
+.steam-puff {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent 70%);
+  filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.state-unlocking .steam-puff {
+  animation: steam-burst 0.9s ease-out forwards;
+}
+
+@keyframes steam-burst {
+  0% { opacity: 0; transform: scale(0.3) translateY(0); }
+  40% { opacity: 0.7; transform: scale(1.4) translateY(-20px); }
+  100% { opacity: 0; transform: scale(2.2) translateY(-40px); }
+}
+
+/* Status HUD Badge */
+.vault-status-hud {
+  position: absolute;
+  bottom: 8%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  background: rgba(11, 15, 23, 0.9);
+  border: 1px solid var(--border-medium);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  z-index: 30;
+}
+
+.vault-hud-led {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.vault-hud-led.red {
+  background: #ef4444;
+  box-shadow: 0 0 12px #ef4444;
+}
+
+.vault-hud-led.amber {
+  background: #f59e0b;
+  box-shadow: 0 0 15px #f59e0b;
+  animation: pulse-hud 0.8s infinite alternate;
+}
+
+.vault-hud-led.emerald {
+  background: #10b981;
+  box-shadow: 0 0 15px #10b981;
+}
+
+.vault-hud-title {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+@keyframes pulse-hud {
+  from { opacity: 0.5; }
+  to { opacity: 1; transform: scale(1.15); }
+}
+
+@media (max-width: 640px) {
+  .vault-bulkhead-frame {
+    width: min(340px, 85vw);
+    height: min(340px, 85vw);
+  }
+  .vault-hud-title {
+    font-size: 0.68rem;
+  }
+  .vault-stage {
+    padding: 1rem;
+  }
+}
