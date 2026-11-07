@@ -170,8 +170,13 @@ export function LoginPage({
             tabIndex={0}
             aria-label="Credentials verified. Click to unseal vault"
           >
-            <ShieldCheck size={20} color="var(--color-vault-gold)" />
-            <span>CREDENTIALS VERIFIED • TAP TO UNSEAL VAULT</span>
+            <div className="unseal-badge-icon">
+              <ShieldCheck size={22} color="var(--color-vault-gold)" />
+            </div>
+            <div className="unseal-badge-text">
+              <span className="unseal-sub-title">CREDENTIALS VERIFIED</span>
+              <span className="unseal-main-title">TAP TO UNSEAL VAULT</span>
+            </div>
           </div>
         )}
 

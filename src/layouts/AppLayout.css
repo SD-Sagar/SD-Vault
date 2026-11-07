@@ -287,8 +287,17 @@
 }
 
 @media (max-width: 768px) {
+  .app-header {
+    height: 56px;
+    padding: 0 0.85rem;
+    box-sizing: border-box;
+  }
   .app-sidebar {
     display: none;
+  }
+  .header-left {
+    gap: 8px;
+    flex-shrink: 0;
   }
   .header-search {
     display: none;
@@ -300,20 +309,67 @@
     padding: 1rem 0.75rem 5rem 0.75rem;
   }
   .header-right {
-    gap: 8px;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .drive-status-badge {
+    padding: 6px;
+    border-radius: 50%;
+  }
+  .drive-status-badge span {
+    display: none;
   }
   .storage-pill {
-    padding: 4px 8px;
+    padding: 4px 6px;
+    gap: 4px;
     font-size: 0.7rem;
   }
   .storage-pill span {
     display: none;
   }
   .storage-bar-mini {
-    width: 38px;
+    width: 32px;
   }
   .brand-mini-name {
     font-size: 0.95rem;
+  }
+  .user-menu {
+    gap: 6px;
+  }
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+  }
+  .btn-icon {
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0 0.5rem;
+  }
+  .brand-mini-shield {
+    width: 28px;
+    height: 28px;
+  }
+  .brand-mini-name {
+    font-size: 0.86rem;
+  }
+  .header-right {
+    gap: 4px;
+  }
+  .user-menu {
+    gap: 4px;
+  }
+  .storage-pill {
+    padding: 3px 5px;
+  }
+  .storage-bar-mini {
+    width: 22px;
+  }
+  .btn-icon {
+    padding: 5px;
   }
 }
 
