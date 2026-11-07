@@ -25,7 +25,9 @@ export const googleAuthService = {
       sessionStorage.setItem('sd_vault_is_reconnecting', 'true');
     }
 
-    const redirectTo = ENV.APP_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+    const redirectTo = (typeof window !== 'undefined' && window.location.origin)
+      ? window.location.origin
+      : (ENV.APP_URL || '');
 
     const { data, error } = await client.auth.signInWithOAuth({
       provider: 'google',
